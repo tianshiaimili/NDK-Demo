@@ -21,8 +21,12 @@ public class MainActivityTestJNI extends Activity {
 	public final static String strip1 = "/sdcard/TestLibary/seg01-1.tss";
 	public final static String strip2 = "/sdcard/TestLibary/seg01-2.tss";
 	
-	public final static String testPath_Head = "/sdcard/TestLibary/8089a0c2959276ac5dca5cb7ad8d2170/test";
-	public final static String testPath_FOLDER = "/sdcard/TestLibary/8089a0c2959276ac5dca5cb7ad8d2170/cutFile/";
+//	public final static String testPath_Head = "/sdcard/TestLibary/8089a0c2959276ac5dca5cb7ad8d2170/test";
+//	public final static String testPath_FOLDER = "/sdcard/TestLibary/8089a0c2959276ac5dca5cb7ad8d2170/cutFile/";
+	
+	public final static String testPath_Head = "/sdcard/TestLibary/64667c6e9c4adc08b332945286df6/fileSequence";
+	public final static String testPath_FOLDER = "/sdcard/TestLibary/64667c6e9c4adc08b332945286df6/cutFile/";
+	
 	public final static String testPath_Recovery = "/sdcard/TestLibary/recoveryFile/";
 	
 	public final static String[] testPath_Array = { testPath_Head + 0 + ".ts",
@@ -87,15 +91,14 @@ public class MainActivityTestJNI extends Activity {
 		super.onCreate(savedInstanceState);
 
 		TextView textView = new TextView(getApplicationContext());
-		int addString = add(10, 2000);
-		LogUtils.e("----" + addString);
-		textView.setText(addString + "  || 456");
+//		int addString = add(10, 2000);
+//		LogUtils.e("----" + addString);
+		textView.setText("  || 456");
 
 		// String addTeString = addTest(null, 200);
 		// LogUtils.e("the addTestString = "+addTeString);
 
-		String pluString = puls(1203366) + "";
-		LogUtils.e("the pluString = " + pluString);
+//		String pluString = puls(1203366) + "";
 		LogUtils.i("***********************");
 		/**
 		 * test ·Ö¸î
@@ -138,14 +141,14 @@ public class MainActivityTestJNI extends Activity {
 		
 		setContentView(textView);
 
-		fileNameArray = new SparseArray<String>();
-		pathLists = new ArrayList<String>();
-		cutPathLists = new ArrayList<SparseArray<String>>();
+//		fileNameArray = new SparseArray<String>();
+//		pathLists = new ArrayList<String>();
+//		cutPathLists = new ArrayList<SparseArray<String>>();
 		
 		///ÇÐ¸î
-//		cutFile();
+		cutFile();
 		//¸´Ô­
-		recoveryFile(testPath_FOLDER);
+//		recoveryFile(testPath_FOLDER);
 		
 		
 		
@@ -181,7 +184,7 @@ public class MainActivityTestJNI extends Activity {
 
 	static {
 
-		System.loadLibrary("TesC");
+		System.loadLibrary("SmartDownloadLibrary");
 
 	}
 

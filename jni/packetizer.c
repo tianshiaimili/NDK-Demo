@@ -15,6 +15,9 @@
 #include "packetizer.h"
 #define TAG    "LogUtils" // 这个是自定义的LOG的标识
 #define LOGI(...)  __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__) // 定义LOGD类型
+//#define LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
+
+#define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,TAG,__VA_ARGS__) // 定义LOGD类型
 
 // Constants are the integer part of the sines of integers (in radians) * 2^32.
 const uint32_t k[64] = {
@@ -63,6 +66,7 @@ uint32_t to_int32(const uint8_t *bytes)
 
 void getMD5(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest) {
 
+	LOGI("run getMD5----");
     // These vars will contain the hash
     uint32_t h0, h1, h2, h3;
 
@@ -247,8 +251,9 @@ void aligned_free(void *ptr) {
 	用 法: void free(void *ptr);
    *
    */
+  LOGI("run-----------free %s",ptr);
   free(ptr);
-
+  LOGI("run-----------free--over");
 }
 
 int write2File(const char* data, const char* filename, int len)
@@ -256,12 +261,14 @@ int write2File(const char* data, const char* filename, int len)
 	FILE *fp;
 
     if ((fp=fopen(filename, "w+b")) == NULL) {
-    	printf("Cannot create file  %s!\n", filename);
+//    	printf("Cannot create file  %s!\n", filename);
+    	LOGE("Cannot create file  %s!\n", filename);
     return -1;
     }
 
 //    printf("Write to file [%d]: %s\n", len, filename);
     fwrite(data, 1, len, fp);
+    LOGI("write file over");
     fclose(fp);
     return 0;
 }
@@ -401,14 +408,14 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
     printf("split file\n");
 //    fflush();
     LOGI("----------the src file to split %s!\n", src);
+    LOGI("----------the strip0 file to split %s!\n", strip0);
     LOGI("----------the strip1 file to split %s!\n", strip1);
-    LOGI("------------------------------ %s\n", strip2);
-    LOGI("----------Canopen source file to split %s!\n", src);
+    LOGI("----------the strip2 file to split %s!\n", strip2);
 //    __android_log_print(ANDROID_LOG_INFO, "----------Canopen source file to split %s!\n", src);
-    if ((fp=fopen(src, "r+b")) == NULL) {
+    if ((fp=fopen(src, "rw")) == NULL) {
 //    	LOGI("Cannot open source file to split %s!\n", src);
-        printf("Cannot open source file to split %s!\n", src);
-        LOGI("----------Canopen source file to split %s\n", src);
+//        printf("Cannot open source file to split %s!\n", src);
+        LOGE("----------Can't open source file to split %s\n", src);
         return -1;
     }
     // get data size and allocate memory for further process
@@ -421,6 +428,7 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
 　	　fseek(fp,100L,1);把fp指针移动到离文件当前位置100字节处；
    　	fseek(fp,100L,2);把fp指针退回到离文件结尾100字节处。
      */
+    LOGI("run fseek--------");
     fseek(fp, 0L, SEEK_END);
 
     //函数 ftell 用于得到文件位置指针当前位置相对于文件首的偏移字节数。在随机方式存取文件时，由于文件位置频繁的前后移动，程序不容易确定文件的当前位置
@@ -433,7 +441,8 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
     for (i=0; i<3; i++) {
         p[i] = aligned_malloc(ssz, 4);		// align to integer
         if (p[i] == NULL) {
-            printf("can't allocate aligned mem! (%d)", ssz);
+//            printf("can't allocate aligned mem! (%d)", ssz);
+            LOGE("can't allocate aligned mem! (%d)", ssz);
 //            fflush();
         }
         
@@ -467,6 +476,8 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
         memcpy(p0, (char*)&data[0], 4);
         memcpy(p1, (char*)&data[1], 4);
         memcpy(p2, (char*)&data[2], 4);
+
+        LOGI("run   ---  memcpy");
       //  memcpy(p3, (char*)&parity, 4);
         
         p0+=4; p1+=4; p2+=4; //p3+=4;
@@ -477,6 +488,7 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
         }
     }
     
+    LOGI("run in fn------");
     int res;
     fn[0] = (char*)strip0;
     fn[1] = (char*)strip1;
@@ -484,10 +496,13 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
     //fn[3] = (char*)strip3;
     for (i=0; i<3; i++) {
         getMD5((uint8_t*)(p[i]+20), (size_t)(ssz-20), (uint8_t*)(p[i]+4));
+        LOGI("-------------md5");
         res = write2File(p[i], fn[i], ssz);
         aligned_free(p[i]);
+        LOGI("res---%d",res);
         if (res < 0) return -1;
     }
+    LOGI("over getMD5---");
     /**
      * 函数名: fclose
 	功 能: 关闭一个流。成功返回0；失败是返回EOF。
@@ -495,7 +510,7 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
      *
      */
     fclose(fp);
-    
+    LOGI("\n split file over......");
     return 0;
 }
 
@@ -530,13 +545,14 @@ int mergeStripsWithMD5(const char* strip0, const char* strip1, const char* strip
 
     printf("Merge files\n");
 
-
-    LOGI("----------the file file to split %s!\n", file);
     LOGI("----------the strip0 file to split %s!\n", strip0);
-    LOGI("------------------------------ %s\n", strip2);
-    LOGI("----------the source file to split %s!\n", file);
+    LOGI("----------the strip1 file to split %s!\n", strip1);
+    LOGI("----------the strip2 file to split %s!\n", strip2);
+    LOGI("----------the src file to split %s!\n", file);
+
     if ((fp=fopen(file, "w+b")) == NULL) {
-	printf("Cannot open source file to merge %s!\n", file);
+//	printf("Cannot open source file to merge %s!\n", file);
+	LOGI("Cannot open source file to merge %s!\n", file);
 	return -1;
     }
 
@@ -551,7 +567,8 @@ int mergeStripsWithMD5(const char* strip0, const char* strip1, const char* strip
 //		printMD5((const uint8_t*)md5);
 //		printf("\n");
 		if (diff != 0) {
-			printf("[Error: checksum not match");
+//			printf("[Error: checksum not match");
+			LOGI("[Error: checksum not match");
 			for (j=0; j<=i; j++)
 				aligned_free(p[j]);
 			return -1;
@@ -584,6 +601,7 @@ int mergeStripsWithMD5(const char* strip0, const char* strip1, const char* strip
     for (i=0; i<3; i++)
     	aligned_free(p[i]);
 
+    LOGI("mergeStripsWithMD5 run over...");
     return 0;
 }
 
