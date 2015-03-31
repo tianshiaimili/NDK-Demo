@@ -61,9 +61,20 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void run() {
-				PacketizerUtils packetizerUtils = PacketizerUtils.instance();
-				LogUtils.d("the path =="+testPath_Array[4]);
-				packetizerUtils.cutFileToTss(testPath_Array[1].trim(), testPath_FOLDER);
+				
+				try {
+					PacketizerUtils packetizerUtils = PacketizerUtils.instance();
+					LogUtils.d("the path =="+testPath_Array[4]);
+					packetizerUtils.cutFileToTss(testPath_Array[3].trim(), testPath_FOLDER);
+					
+//					packetizerUtils.doit();
+					
+				} catch (Exception e) {
+
+					LogUtils.e("err0r--"+e.getMessage());
+				
+				}
+				
 			}
 		},2000);
 		

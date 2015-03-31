@@ -219,7 +219,7 @@ int splitToStrips(const char* src, const char* strip0, const char* strip1, const
     fclose(dd);
 
     return 0;
-}	
+}
 
 /* align_size has to be a power of two !! */
 void *aligned_malloc(size_t size, size_t align_size) {
@@ -245,6 +245,7 @@ void aligned_free(void *ptr) {
 
   int *ptr2=(int *)ptr - 1;
   ptr -= *ptr2;
+
   /**
    * 函数名: free
 	功 能: 释放已分配的块
@@ -252,7 +253,20 @@ void aligned_free(void *ptr) {
    *
    */
   LOGI("run-----------free %s",ptr);
-  free(ptr);
+//  try {
+  if(ptr != NULL){
+	  LOGE("run------===-----free");
+	  free(ptr);
+  }else{
+	  LOGE("run------===-----exit");
+	  exit(1);
+
+  }
+
+//} catch (Exception e) {
+
+//}
+
   LOGI("run-----------free--over");
 }
 
@@ -277,7 +291,7 @@ int write2File(const char* data, const char* filename, int len)
 // please call aligned_free to free the memory after use
 int read2Mem(char** data, const char* filename, int* len)
 {
-	FILE *fp; 
+	FILE *fp;
 
     if ((fp=fopen(filename, "r+b")) == NULL) {
     	printf("Cannot read file  %s!\n", filename);
@@ -307,7 +321,7 @@ int read2Mem(char** data, const char* filename, int* len)
 // preserve first 4bits (TS size) + 16bits (MD5 checksum)
 int splitToStripsWithMD5(const char* src, const char* strip0, const char* strip1, const char* strip2, const char* strip3)
 {
-    FILE *fp; 
+    FILE *fp;
     char *p0, *p1, *p2, *p3;
     char *p[4];
     char *fn[4];
@@ -369,7 +383,7 @@ int splitToStripsWithMD5(const char* src, const char* strip0, const char* strip1
 		if (bread < 12) {
 //			printf("end of data :%d %x %x %x\n", bread, data[0], data[1], data[2]);
 			break;
-		}	
+		}
     }
 
     int res;
@@ -404,7 +418,7 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
     int bread;
     int i;
     int *pt;
-    
+
     printf("split file\n");
 //    fflush();
     LOGI("----------the src file to split %s!\n", src);
@@ -412,7 +426,7 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
     LOGI("----------the strip1 file to split %s!\n", strip1);
     LOGI("----------the strip2 file to split %s!\n", strip2);
 //    __android_log_print(ANDROID_LOG_INFO, "----------Canopen source file to split %s!\n", src);
-    if ((fp=fopen(src, "rw")) == NULL) {
+    if ((fp=fopen(src, "r+b")) == NULL) {
 //    	LOGI("Cannot open source file to split %s!\n", src);
 //        printf("Cannot open source file to split %s!\n", src);
         LOGE("----------Can't open source file to split %s\n", src);
@@ -437,7 +451,7 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
     fseek(fp, 0L, SEEK_SET);
 
     int ssz = ((sz+11) / 12)*4 + 20;
-    
+
     for (i=0; i<3; i++) {
         p[i] = aligned_malloc(ssz, 4);		// align to integer
         if (p[i] == NULL) {
@@ -445,28 +459,28 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
             LOGE("can't allocate aligned mem! (%d)", ssz);
 //            fflush();
         }
-        
+
         pt = (int*)p[i];
         pt[0] = sz;
     }
-    
+
     p0= p[0]+20;
     p1= p[1]+20;
     p2= p[2]+20;
     //p3= p[3]+20;
-    
+
     while (1) {
     	//fread是一个函数 从一个文件流中读数据，最多读取count个元素，每个元素size字节，如果调用成功返回实际读取到的元素个数，如果不成功或读到文件末尾返回 0
         bread = fread(buffer, 1, 12, fp);
-        
-        
+
+
         if (bread < 12) {
             int padding = 12 - bread;
             for (i=0; i<padding; i++) {
                 buffer[bread+i] = 0;
             }
         }
-        
+
         data = (int*)buffer;
     //    parity = (data[0]^data[1])^data[2];
         //函数名: memcpy
@@ -479,15 +493,15 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
 
         LOGI("run   ---  memcpy");
       //  memcpy(p3, (char*)&parity, 4);
-        
+
         p0+=4; p1+=4; p2+=4; //p3+=4;
-        
+
         if (bread < 12) {
             //			printf("end of data :%d %x %x %x\n", bread, data[0], data[1], data[2]);
             break;
         }
     }
-    
+
     LOGI("run in fn------");
     int res;
     fn[0] = (char*)strip0;
@@ -662,7 +676,7 @@ int mergeStrips(const char* strip0, const char* strip1, const char* strip2, cons
 	lastBuf = currBuf;
 	currBuf = tmpPtr;
     }
-  
+
     data = (int*)lastBuf;
     if ((data[1] == 0) && (data[2] == 0)) fwrite(lastBuf, 4, 1, fp);
        else if (data[2] == 0) fwrite(lastBuf, 8, 1, fp);
@@ -674,7 +688,7 @@ int mergeStrips(const char* strip0, const char* strip1, const char* strip2, cons
     fclose(d2);
 
     return 0;
-}	
+}
 
 
 int genMissingWithMD5(const char* stripA, const char* stripB, const char* stripC, const char* stripX)
@@ -722,7 +736,7 @@ int genMissingWithMD5(const char* stripA, const char* stripB, const char* stripC
 	if (res < 0) return -1;
 
     return 0;
-}		
+}
 
 // It only gen the missing strip, wouldn't check MD5 of provided strips
 int genMissing(const char* stripA, const char* stripB, const char* stripC, const char* stripX)

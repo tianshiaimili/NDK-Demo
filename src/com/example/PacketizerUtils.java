@@ -7,8 +7,6 @@ import java.util.List;
 
 import android.util.SparseArray;
 
-import com.tvb.smartdownload.utils.LogUtils;
-
 public class PacketizerUtils {
 
 	/**存放全部的分割后的tss文件路径*/
@@ -61,8 +59,12 @@ public class PacketizerUtils {
 	 * @param strip0
 	 *            切割分成三部分 的第一份
 	 * */
-	public native static int splitToStripsWithMD5Min(String srcFile, String strip0,
-			String strip1, String strip2);
+	public native static void splitToStripsWithMD5Min(String srcFile, String strip0,
+			String strip1, String strip2) throws IllegalArgumentException;
+	
+	
+	
+	public native void doit() throws IllegalArgumentException;
 	
 	
 	/**
@@ -183,9 +185,9 @@ public class PacketizerUtils {
 //				LogUtils.i("***********************path --"+path);
 //				LogUtils.i("***********************getFileName --"+getFileName(path));
 				stripTempName = getFileName(path);
-				String writeFile = splitToStripsWithMD5Min(path, filePath+stripTempName+"-1.tss",
-						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss") + "";
-				LogUtils.e("the writeFile = " + writeFile);
+//				String writeFile = splitToStripsWithMD5Min(path, filePath+stripTempName+"-1.tss",
+//						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss") + "";
+//				LogUtils.e("the writeFile = " + writeFile);
 				
 //				file = new File(path);
 //				file.delete();
@@ -210,9 +212,9 @@ public class PacketizerUtils {
 //				LogUtils.i("***********************path --"+path);
 //				LogUtils.i("***********************getFileName --"+getFileName(path));
 				stripTempName = getFileName(path);
-				String writeFile = splitToStripsWithMD5Min(path, filePath+stripTempName+"-1.tss",
-						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss") + "";
-				LogUtils.e("the writeFile = " + writeFile);
+//				String writeFile = splitToStripsWithMD5Min(path, filePath+stripTempName+"-1.tss",
+//						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss") + "";
+//				LogUtils.e("the writeFile = " + writeFile);
 				
 				file = new File(path);
 				file.delete();
@@ -238,9 +240,12 @@ public class PacketizerUtils {
 			try {
 				stripTempName = getFileName(tsPath);
 				
-				String writeFile = splitToStripsWithMD5Min(tsPath, filePath+stripTempName+"-1.tss",
-						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss") + "";
-				LogUtils.e("the writeFile = " + writeFile);
+//				String writeFile = splitToStripsWithMD5Min(tsPath, filePath+stripTempName+"-1.tss",
+//						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss") + "";
+//				LogUtils.e("the writeFile = " + writeFile);
+				
+				splitToStripsWithMD5Min(tsPath, filePath+stripTempName+"-1.tss",
+						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss");
 				
 			} catch (Exception e) {
 				
