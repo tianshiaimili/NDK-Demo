@@ -15,8 +15,8 @@
 #include "packetizer.h"
 #define TAG    "LogUtils" // 这个是自定义的LOG的标识
 #define LOGI(...)  __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__) // 定义LOGD类型
-//#define LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
-
+#define LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
+#define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,TAG,__VA_ARGS__) // 定义LOGD类型
 #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,TAG,__VA_ARGS__) // 定义LOGD类型
 
 // Constants are the integer part of the sines of integers (in radians) * 2^32.
@@ -253,7 +253,10 @@ void aligned_free(void *ptr) {
    *
    */
   LOGI("run-----------free %s",ptr);
+  if(ptr != NULL){
+	  LOGD("run--====-free %s",ptr);
 	  free(ptr);
+  }
 
   LOGI("run-----------free--over");
 }
@@ -426,9 +429,9 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
      * SEEK_END： 文件结尾
 　　	其中SEEK_SET,SEEK_CUR和SEEK_END和依次为0，1和2.
 　　	简言之：
-　　	fseek(fp,100L,0);把fp指针移动到离文件开头100字节处；
+　　	fseek(fp,100L,0);把fp指针移动到离文件开头100字节处；SEEK_SET
 　	　fseek(fp,100L,1);把fp指针移动到离文件当前位置100字节处；
-   　	fseek(fp,100L,2);把fp指针退回到离文件结尾100字节处。
+   　	fseek(fp,100L,2);把fp指针退回到离文件结尾100字节处。 SEEK_END
      */
     LOGI("run fseek--------");
     fseek(fp, 0L, SEEK_END);

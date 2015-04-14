@@ -1,4 +1,4 @@
-obj/local/mips/objs/packetizerUtils/Operate.o: jni/Operate.c \
+obj/local/mips/objs/packetizerUtils2/Operate.o: jni/Operate.c \
  jni/Operate.h \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-mips/usr/include/string.h \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-mips/usr/include/sys/cdefs.h \

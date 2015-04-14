@@ -24,6 +24,5 @@ int genMissingWithMD5(const char* stripA, const char* stripB, const char* stripC
 
 //
 char* jstringTostring(JNIEnv* env, jstring jstr);
-
 #endif
 

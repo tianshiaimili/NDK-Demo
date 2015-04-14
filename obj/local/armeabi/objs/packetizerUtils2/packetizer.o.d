@@ -1,4 +1,4 @@
-obj/local/armeabi-v7a/objs/packetizerUtils/packetizer.o: jni/packetizer.c \
+obj/local/armeabi/objs/packetizerUtils2/packetizer.o: jni/packetizer.c \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-arm/usr/include/android/log.h \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-arm/usr/include/jni.h \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-arm/usr/include/sys/cdefs.h \

@@ -18,9 +18,13 @@ public class MainActivity extends Activity {
 //	public final static String testPath_Head = "/sdcard/TestLibary/8089a0c2959276ac5dca5cb7ad8d2170/test";
 //	public final static String testPath_FOLDER = "/sdcard/TestLibary/8089a0c2959276ac5dca5cb7ad8d2170/cutFile/";
 	
-	public final static String testPath_Head = "/sdcard/TestLibary/64667c6e9c4adc08b332945286df6/fileSequence";
-	public final static String testPath_FOLDER = "/sdcard/TestLibary/64667c6e9c4adc08b332945286df6/cutFile/";
+//	public final static String testPath_Head = "/sdcard/TestLibary/64667c6e9c4adc08b332945286df6/fileSequence";
+//	public final static String testPath_FOLDER = "/sdcard/TestLibary/64667c6e9c4adc08b332945286df6/cutFile/";
 //	public final static String testPath_FOLDER = "/sdcard/SmartDownloadDemo/testplay/";
+	//Ä£ÄâÆ÷
+	public final static String testPath_Head = "/sdcard/Download/fileSequence";
+	public final static String testPath_FOLDER = "/sdcard/Download/";
+	
 	
 	public final static String testPath_Recovery = "/sdcard/TestLibary/recoveryFile/";
 	
@@ -66,7 +70,7 @@ public class MainActivity extends Activity {
 				try {
 					PacketizerUtils packetizerUtils = PacketizerUtils.instance();
 					LogUtils.d("the path =="+testPath_Array[4]);
-					packetizerUtils.cutFileToTss(testPath_Array[1].trim(), testPath_FOLDER);
+					packetizerUtils.cutFileToTss(testPath_Array[4].trim(), testPath_FOLDER);
 //					packetizerUtils.recoveryFile(testPath_FOLDER);
 					
 //					packetizerUtils.doit();

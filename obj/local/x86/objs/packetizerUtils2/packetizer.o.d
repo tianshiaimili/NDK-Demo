@@ -1,4 +1,4 @@
-obj/local/x86/objs/packetizerUtils/packetizer.o: jni/packetizer.c \
+obj/local/x86/objs/packetizerUtils2/packetizer.o: jni/packetizer.c \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-x86/usr/include/android/log.h \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-x86/usr/include/jni.h \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-x86/usr/include/sys/cdefs.h \

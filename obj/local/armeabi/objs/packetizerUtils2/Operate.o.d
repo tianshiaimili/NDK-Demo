@@ -1,4 +1,4 @@
-obj/local/armeabi-v7a/objs/packetizerUtils/Operate.o: jni/Operate.c \
+obj/local/armeabi/objs/packetizerUtils2/Operate.o: jni/Operate.c \
  jni/Operate.h \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-arm/usr/include/string.h \
  D:/Android-NDK-Developer/android-ndk-r10d/platforms/android-16/arch-arm/usr/include/sys/cdefs.h \
