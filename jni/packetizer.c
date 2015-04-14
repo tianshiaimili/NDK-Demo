@@ -253,19 +253,7 @@ void aligned_free(void *ptr) {
    *
    */
   LOGI("run-----------free %s",ptr);
-//  try {
-  if(ptr != NULL){
-	  LOGE("run------===-----free");
 	  free(ptr);
-  }else{
-	  LOGE("run------===-----exit");
-	  exit(1);
-
-  }
-
-//} catch (Exception e) {
-
-//}
 
   LOGI("run-----------free--over");
 }
@@ -274,7 +262,7 @@ int write2File(const char* data, const char* filename, int len)
 {
 	FILE *fp;
 
-    if ((fp=fopen(filename, "w+b")) == NULL) {
+    if ((fp=fopen(filename, "wb+")) == NULL) {
 //    	printf("Cannot create file  %s!\n", filename);
     	LOGE("Cannot create file  %s!\n", filename);
     return -1;
@@ -426,7 +414,7 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
     LOGI("----------the strip1 file to split %s!\n", strip1);
     LOGI("----------the strip2 file to split %s!\n", strip2);
 //    __android_log_print(ANDROID_LOG_INFO, "----------Canopen source file to split %s!\n", src);
-    if ((fp=fopen(src, "r+b")) == NULL) {
+    if ((fp=fopen(src, "rb+")) == NULL) {
 //    	LOGI("Cannot open source file to split %s!\n", src);
 //        printf("Cannot open source file to split %s!\n", src);
         LOGE("----------Can't open source file to split %s\n", src);
@@ -491,7 +479,7 @@ int splitToStripsWithMD5Min(const char* src, const char* strip0, const char* str
         memcpy(p1, (char*)&data[1], 4);
         memcpy(p2, (char*)&data[2], 4);
 
-        LOGI("run   ---  memcpy");
+//        LOGI("run   ---  memcpy");
       //  memcpy(p3, (char*)&parity, 4);
 
         p0+=4; p1+=4; p2+=4; //p3+=4;
@@ -800,6 +788,29 @@ int puls(int x){
 	return x;
 
 }
+
+/**
+ * 转换jstring和char 保证路径正确
+ */
+//char* jstringTostring(JNIEnv* env, jstring jstr)
+//{
+//       char* rtn = NULL;
+//       jclass clsstring = env->FindClass("java/lang/String");
+//       jstring strencode = env->NewStringUTF("utf-8");
+//       jmethodID mid = env->GetMethodID(clsstring, "getBytes", "(Ljava/lang/String;)[B");
+//       jbyteArray barr= (jbyteArray)env->CallObjectMethod(jstr, mid, strencode);
+//       jsize alen = env->GetArrayLength(barr);
+//       jbyte* ba = env->GetByteArrayElements(barr, JNI_FALSE);
+//       if (alen > 0)
+//       {
+//                 rtn = (char*)malloc(alen + 1);
+//                 memcpy(rtn, ba, alen);
+//                 rtn[alen] = 0;
+//       }
+//       env->ReleaseByteArrayElements(barr, ba, 0);
+//       return rtn;
+//}
+
 
 /**
  * 转换jstring和char 保证路径正确

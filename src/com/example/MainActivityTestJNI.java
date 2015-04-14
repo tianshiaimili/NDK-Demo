@@ -25,7 +25,8 @@ public class MainActivityTestJNI extends Activity {
 //	public final static String testPath_FOLDER = "/sdcard/TestLibary/8089a0c2959276ac5dca5cb7ad8d2170/cutFile/";
 	
 	public final static String testPath_Head = "/sdcard/TestLibary/64667c6e9c4adc08b332945286df6/fileSequence";
-	public final static String testPath_FOLDER = "/sdcard/TestLibary/64667c6e9c4adc08b332945286df6/cutFile/";
+//	public final static String testPath_FOLDER = "/sdcard/TestLibary/64667c6e9c4adc08b332945286df6/cutFile/";
+	public final static String testPath_FOLDER = "/sdcard/SmartDownloadDemo/testplay/";
 	
 	public final static String testPath_Recovery = "/sdcard/TestLibary/recoveryFile/";
 	
@@ -146,9 +147,9 @@ public class MainActivityTestJNI extends Activity {
 //		cutPathLists = new ArrayList<SparseArray<String>>();
 		
 		///ÇÐ¸î
-		cutFile();
+//		cutFile();
 		//¸´Ô­
-//		recoveryFile(testPath_FOLDER);
+		recoveryFile(testPath_FOLDER);
 		
 		
 		
@@ -216,6 +217,8 @@ public class MainActivityTestJNI extends Activity {
 		if(files !=null && files.length > 0){
 			
 			for(File tempFile : files){
+				
+				if(tempFile.isDirectory()) continue;
 				
 				temFileName = tempFile.getPath();
 //				fileNameArray.put(index, temFileName);

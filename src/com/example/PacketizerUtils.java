@@ -18,7 +18,7 @@ public class PacketizerUtils {
 	private static PacketizerUtils packetizerUtils = null;
 	
 	static {
-		System.loadLibrary("packetizerUtils");
+		System.loadLibrary("packetizerUtils2");
 	}
 	
 	public PacketizerUtils (){
@@ -110,7 +110,10 @@ public class PacketizerUtils {
 				if(temFileName.endsWith("ts")){
 					continue;
 				}
-				if(temFileName.equals("m3u8")){
+				if(temFileName.endsWith("m3u8")){
+					continue;
+				}
+				if(tempFile.isDirectory()){
 					continue;
 				}
 				pathLists.add(temFileName);
@@ -243,9 +246,16 @@ public class PacketizerUtils {
 //				String writeFile = splitToStripsWithMD5Min(tsPath, filePath+stripTempName+"-1.tss",
 //						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss") + "";
 //				LogUtils.e("the writeFile = " + writeFile);
+				String strip1 = filePath+stripTempName+"-1.tss";
+				String strip2 = filePath+stripTempName+"-2.tss";
+				String strip3 = filePath+stripTempName+"-3.tss";
 				
-				splitToStripsWithMD5Min(tsPath, filePath+stripTempName+"-1.tss",
-						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss");
+				LogUtils.i("***********************tsPath --"+tsPath);
+				LogUtils.i("***********************strip1--"+strip1);
+				LogUtils.i("***********************strip2 --"+strip2);
+				LogUtils.i("***********************strip3 --"+strip3);
+				
+				splitToStripsWithMD5Min(tsPath, strip1,strip2, strip3);
 				
 			} catch (Exception e) {
 				

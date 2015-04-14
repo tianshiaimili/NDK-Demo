@@ -4,7 +4,6 @@
 #define TSS_NUM_PER_TS 4 /* each ts will be splitted to 4 tss */
 #define TSS_NUM_MERGE_TS 3 /* at least 3 tss needed to merge back ts */
 #define TSS_NUM_MAX_FAIL 2 /* if 2 tss fail, then can NOT merge back */
-
 // split to 3 strips + 1 parity
 int splitToStrips(const char* src, const char* strip0, const char* strip1, const char* strip2, const char* strip3);
 // split with MD5 checksum
@@ -22,11 +21,9 @@ int genMissing(const char* stripA, const char* stripB, const char* stripC, const
 // recover 1 split from other three (which with MD5 header), correctness of each strip would not check
 int genMissingWithMD5(const char* stripA, const char* stripB, const char* stripC, const char* stripX);
 
-//myTest
-char *addTest(const char* x);
 
-int puls(int x);
-
+//
+char* jstringTostring(JNIEnv* env, jstring jstr);
 
 #endif
 
