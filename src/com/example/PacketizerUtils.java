@@ -62,7 +62,8 @@ public class PacketizerUtils {
 	public native static void splitToStripsWithMD5Min(String srcFile, String strip0,
 			String strip1, String strip2) throws IllegalArgumentException;
 	
-	
+	public native static void splitToStripsWithMD5(String srcFile, String strip0,
+			String strip1, String strip2,String strip3) throws IllegalArgumentException;
 	
 	public native void doit() throws IllegalArgumentException;
 	
@@ -256,6 +257,47 @@ public class PacketizerUtils {
 				LogUtils.i("***********************strip3 --"+strip3);
 				
 				splitToStripsWithMD5Min(tsPath, strip1,strip2, strip3);
+				
+			} catch (Exception e) {
+				
+				LogUtils.e("error --"+e.getMessage());
+				
+			}	
+				
+//				File file = new File(tsPath);
+//				file.delete();
+				
+		}
+	}
+	
+	/**
+	 * 
+	 * @param tsPath the ts path
+	 * @param filePath   the folder path where to save the tss file
+	 */
+	public void cutFileToTssTo4(String tsPath,String filePath){
+		String stripTempName= null;
+		if(tsPath != null  && filePath != null){
+			
+//				LogUtils.i("***********************path --"+path);
+//				LogUtils.i("***********************getFileName --"+getFileName(path));
+			try {
+				stripTempName = getFileName(tsPath);
+				
+//				String writeFile = splitToStripsWithMD5Min(tsPath, filePath+stripTempName+"-1.tss",
+//						filePath+stripTempName+"-2.tss", filePath+stripTempName+"-3.tss") + "";
+//				LogUtils.e("the writeFile = " + writeFile);
+				String strip1 = filePath+stripTempName+"-1.tss";
+				String strip2 = filePath+stripTempName+"-2.tss";
+				String strip3 = filePath+stripTempName+"-3.tss";
+				String strip4 = filePath+stripTempName+"-4.tss";
+				
+				LogUtils.i("***********************tsPath --"+tsPath);
+				LogUtils.i("***********************strip1--"+strip1);
+				LogUtils.i("***********************strip2 --"+strip2);
+				LogUtils.i("***********************strip3 --"+strip3);
+				
+				splitToStripsWithMD5(tsPath, strip1,strip2, strip3,strip4);
 				
 			} catch (Exception e) {
 				

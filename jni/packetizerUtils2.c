@@ -57,6 +57,51 @@ JNIEXPORT void JNICALL  native_splitToStripsWithMD5Min(JNIEnv* env, jobject thiz
 
 }
 
+JNIEXPORT void JNICALL  native_splitToStripsWithMD5(JNIEnv* env, jobject thiz,
+		jstring srcFile,jstring strip0,jstring strip1,jstring strip2,jstring strip3) {
+
+	  jthrowable exc;
+
+//	 splitToStripsWithMD5Min(jstringTostring(env,srcFile), jstringTostring(env,strip0), jstringTostring(env,strip1), jstringTostring(env,strip2));
+	   char * path0 = (char*)(*env)->GetStringUTFChars(env,srcFile,0);
+	   char * path1 = (char*)(*env)->GetStringUTFChars(env,strip0,0);
+	   char * path2 = (char*)(*env)->GetStringUTFChars(env,strip1,0);
+	   char * path3 = (char*)(*env)->GetStringUTFChars(env,strip2,0);
+	   char * path4 = (char*)(*env)->GetStringUTFChars(env,strip3,0);
+	   LOGI("path0---- %s!\n", path0);
+	   splitToStripsWithMD5(path0, path1, path2, path3,path4);
+
+	 exc = (*env)->ExceptionOccurred(env);
+	 LOGE("**************");
+     if (exc) {
+    	 LOGE("error**************");
+         jclass newExcCls;
+
+         (*env)->ExceptionDescribe(env);
+
+         (*env)->ExceptionClear(env);
+
+         newExcCls = (*env)->FindClass(env,
+
+                       "java/lang/IllegalArgumentException");
+
+         if (newExcCls == NULL) {
+
+             /* Unable to find the exception class, give up. */
+
+             return;
+
+         }
+
+         (*env)->ThrowNew(env, newExcCls, "thrown from C code");
+
+     }
+
+}
+
+
+
+
 /////¸´Ô­
 jint native_mergeStripsWithMD5(JNIEnv* env, jobject thiz,
 		jstring strip0,jstring strip1,jstring strip2,jstring srcFile) {
@@ -136,6 +181,7 @@ static JNINativeMethod methods[] = {
         {"splitToStripsWithMD5Min", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", (void*)native_splitToStripsWithMD5Min},
         {"mergeStripsWithMD5", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I", (void*)native_mergeStripsWithMD5},
         {"doit", "()V", (void*)doit},
+        {"splitToStripsWithMD5", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", (void*)native_splitToStripsWithMD5}
 };
 
 jint JNI_OnLoad(JavaVM* vm, void* reserved)

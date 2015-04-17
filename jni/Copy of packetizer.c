@@ -227,7 +227,7 @@ void *aligned_malloc(size_t size, size_t align_size) {
   char *ptr,*ptr2,*aligned_ptr;
   int align_mask = align_size - 1;
 
-  ptr=(char *)malloc(size + align_size + sizeof(int)+8);
+  ptr=(char *)malloc(size + align_size + sizeof(int));
   if(ptr==NULL) return(NULL);
 
   ptr2 = ptr + sizeof(int);
@@ -257,7 +257,7 @@ void aligned_free(void *ptr) {
   if(ptr != NULL){
 	  LOGD("run--====-free %d",ptr);
 	  LOGI("run----====free2 %d",ptr2);
-	  free(ptr);
+//	  free(ptr);
   }
 
   LOGI("run-----------free--over");
